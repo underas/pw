@@ -40,30 +40,66 @@
         </div>
         <v-img :src="bannerBG" :aspect-ratio="4/3" cover class="banner"></v-img>
       </div>
-      <div class="content">
-        <div class="sidebar" :class="{fix : notInBanner , skillBarColor : inSkill ,exampleBarColor : inExample}">
-          <div class="mt-5"></div>
-          <div class="sidebar_items ">
-            <v-btn color="white" :class="{ active : inAbout}" block text>About me</v-btn>
-          </div>
-          <div class="sidebar_items ">
-            <v-btn color="white" :class="{ active : inSkill}" block text>Skills</v-btn>
-          </div>
-          <div class="sidebar_items ">
-            <v-btn color="white" :class="{ active : inExample}" block text>Example</v-btn>
+      <div id="Content" class="Content">
+        <div class="sideBar hidden-sm-and-down" :class="{ poFix : overBanner}">
+          <div class="sideBar_items" :class="{ 'mt-7' : index === 0 , active : index === 0 && inAbout  , activeSkill : index === 1 && inSkills}" v-for="(item , index) in items" :key="index">
+            <span class="mr-2"><v-icon class="iconColor">{{item.icon}}</v-icon></span><span style="white-space: pre">{{item.title}}</span>
           </div>
         </div>
-        <div class="main_show" :class="{ml20p : notInBanner ,  skillBG : inSkill , exampleBG : inExample}">
-          <div id="about" class="about">
+        <div id="about" class="about">
+          <div>
+            <v-row>
+              <v-col md="3"></v-col>
+              <v-col cols="12" md="9">
+                <v-row>
+                  <v-col cols="1"></v-col>
+                  <v-col cols="10">
+                    <v-card max-width="100%" class="slideStart" :class="{ slideUp : this.cardShow }">
+                      <v-card-title class="about_title">123</v-card-title>
+                      <v-card-text class="about_content">
+                        3212312132123121321231213212312132123121321231213212312132123121321231213212312132123121321231213212312132123121
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                  <v-col cols="1"></v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col md="3"></v-col>
+              <v-col cols="12" md="9">
+                <v-row>
+                  <v-col cols="1"></v-col>
+                  <v-col cols="10">
+                    <v-row>
+                      <v-col cols="6">
+                        <v-card max-width="100%" height="100%" class="slideStart" elevation="12" :class="{ slideUp : this.cardShow }">
+                          <v-card-title class="about_title">{{ about[1].title }}</v-card-title>
+                          <v-card-text class="about_content">
+                            {{ about[1].content }}
+                          </v-card-text>
+                        </v-card>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-card max-width="100%" height="100%" class="slideStart" elevation="12" :class="{ slideUp : this.cardShow }">
+                          <v-card-title class="about_title">{{ about[2].title }}</v-card-title>
+                          <v-card-text class="about_content">
+                            {{ about[2].content }}
+                          </v-card-text>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="1"></v-col>
+                </v-row>
+              </v-col>
+            </v-row>
           </div>
-          <div id="skills" class="skills">
-          </div>
-          <div id="example" class="example">
+        </div>
+        <div id="skills" class="skills">
 
-          </div>
         </div>
       </div>
-
 
 
     </v-content>
@@ -77,73 +113,100 @@
         components: {},
         data: () => ({
             bannerBG: require('@/assets/image/bg.jpg'),
-            notInBanner : false,
-            breakpoint1 : null,
-            breakpoint2 : null,
-            breakpoint3 : null,
-            breakpoint4 : null,
-
+            drawer: true,
+            overBanner: false,
+            cardShow : false,
+            bannerH: null,
+            aboutH: null,
+            skillsH : null,
+            changePoint: null,
+            changePoint1: null,
             inAbout : false,
-            inSkill : false,
+            inSkills : false,
             inExample : false,
             items: [
-                {title: 'Home', icon: 'mdi-home'},
-                {title: 'About', icon: 'mdi-question_answer'},
+                {title: 'AboutMe', icon: 'mdi-account'},
+                {title: 'MySkills', icon: 'mdi-book-open'},
+                {title: 'project', icon: 'mdi-briefcase'},
             ],
+            mini: true,
+            nowAbout: {
+                title: 'Past',
+                content: '黃永均(Kevin Huang)，畢業於'
+            },
+            about: [
+                {
+                    title: '個人資料',
+                    content: '黃永均(Kevin Huang)，畢業於元智大學資訊管理學系，'
+                },
+                {
+                    title: '現職狀況',
+                    content: '目前任職於幸福空間，擔任前端工程師，負責項目為撰寫業務或企劃需求的網頁與現行網站改版作業，主要是將傳統前後端合一的php網站拆為vue(nuxt)與php(CI)結合，環境使用docker + nginx + MariaDB' +
+                        '活動網頁依照需求不同使用（ Vue Cli3 或 Nuxt 搭配 vuetify 串接使用Axios 、 gulp建置html搭配bootstrap或script使用vue進行動態網頁撰寫,串接使用jquery Ajax）並持續學習其他網頁新知識。'
+                },
+                {
+                    title: '未來展望',
+                    content: '希望持續整合自己對於網頁技術的能力，不管是frontend、backend、devoop部份都想持續進步，讓自己對整體的軟體架構有更多了解，個人能力之外，希望能找到大家一起進步的團隊，而不是過度官僚或充斥' +
+                        '表面功夫的地方。除了前端工程師這份工作之外，本身也想嘗試不同方面的經驗！所以對於產業部分沒有特別限制。'
+                },
+            ]
         }),
         mounted() {
             window.addEventListener('scroll', this.handle);
             const bannerHeight = document.querySelectorAll('#banner');
             const aboutHeight = document.querySelectorAll('#about');
             const skillsHeight = document.querySelectorAll('#skills');
-            const exampleHeight = document.querySelectorAll('#example');
 
-            let bannerH = bannerHeight[0].clientHeight;
-            let aboutH = aboutHeight[0].clientHeight;
-            let skillsH =  skillsHeight[0].clientHeight;
-            let exampleH = exampleHeight[0].clientHeight;
 
-            this.breakpoint1 = bannerH;
-            this.breakpoint2 = bannerH + aboutH - 30;
-            this.breakpoint3 = bannerH + aboutH + skillsH  - 30;
-            this.breakpoint4 = bannerH + aboutH + skillsH + exampleH  - 30;
+            this.bannerH = bannerHeight[0].clientHeight;
+            this.aboutH = aboutHeight[0].clientHeight;
+            this.skillsH = skillsHeight[0].clientHeight;
+
+
+
+            this.changePoint = this.bannerH + this.aboutH - 60;
+            this.changePoint1 = this.bannerH + this.aboutH + this.skillsH ;
 
         },
         methods: {
             handle() {
-                if(window.pageYOffset >= this.breakpoint1 ){
-                    this.notInBanner = true;
-                }else{
-                    this.notInBanner = false;
+                if (window.pageYOffset >= this.bannerH) {
+                    this.overBanner = true;
+                } else {
+                    this.overBanner = false;
                 }
 
-                if(window.pageYOffset >= this.breakpoint1  && window.pageYOffset < this.breakpoint2){
+                if (window.pageYOffset >= this.bannerH / 2) {
+                    this.cardShow = true;
+                } else {
+                    this.cardShow = false;
+                }
+
+                if (window.pageYOffset >= this.bannerH / 2 && window.pageYOffset < this.changePoint +60 ) {
                     this.inAbout = true;
-                }else{
+                } else {
                     this.inAbout = false;
                 }
 
-                if(window.pageYOffset >= this.breakpoint2 && window.pageYOffset < this.breakpoint3){
-                      this.inSkill = true;
-                }else{
-                    this.inSkill = false;
+                if (window.pageYOffset >= (this.changePoint + 60) - (this.aboutH / 2) && window.pageYOffset < this.changePoint1  ) {
+                    this.inSkills = true;
+                } else {
+                    this.inSkills = false;
                 }
 
-                if(window.pageYOffset >= this.breakpoint3 && window.pageYOffset < this.breakpoint4 ){
-                    this.inExample = true;
-                }else{
-                    this.inExample = false;
-                }
+
+
+
 
             },
-            goTo(place){
-                if(place === 'banner'){
+            goTo(place) {
+                if (place === 'banner') {
                     let options = {
                         duration: 500,
                         offset: 0,
                         easing: 'easeInOutQuad',
                     };
-                    this.$vuetify.goTo(this.breakpoint1 , options);
+                    this.$vuetify.goTo(this.bannerH, options);
                 }
             }
         }
@@ -246,17 +309,18 @@
 
       }
 
-      .down_btn{
+      .down_btn {
         position: absolute;
         bottom: 15px;
         z-index: 1;
         left: 50%;
         border: 1px solid white;
         border-radius: 50%;
-        padding : 3px;
-        animation : BtnUpDown 2s ease infinite;
+        padding: 3px;
+        animation: BtnUpDown 2s ease infinite;
         transition: .5s;
-        .arrowColor{
+
+        .arrowColor {
           color: #fff;
           transition: .5s;
         }
@@ -267,77 +331,115 @@
       height: 100vh;
     }
 
-    .down_btn:hover{
+    .down_btn:hover {
       background-color: #fff;
       cursor: pointer;
-      .arrowColor{
+
+      .arrowColor {
         color: #000;
       }
     }
 
-    .content{
+    .Content {
+      position: relative;
       width: 100%;
-      display: inline-flex;
-      .sidebar{
-        width: 20%;
+      background: linear-gradient(70deg, #6996A9, #FFF0B6);
+      transition: .4s;
+
+      .sideBar {
+        position: absolute;
+        top: 0;
+        left: 0;
         height: 100vh;
-        background-color: #A13E97;
-        transition: .5s;
-        .sidebar_items{
-          padding: 15px 0;
+        width: 20%;
+        z-index: 1;
+        background: linear-gradient(70deg, #282A2B, #6996A9);
+
+        .active{
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .activeSkill{
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .sideBar_items {
           width: 100%;
-          .active{
-            color: black !important;
+          height: 70px;
+          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: .3s;
+
+          .iconColor {
+            color: #fff;
           }
+        }
+
+        .sideBar_items:hover {
+          cursor: pointer;
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+
+      }
+
+      .poFix {
+        position: fixed !important;
+      }
+
+      .about {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background: url('assets/image/about_bg.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-attachment: fixed;
+
+        .about_title {
+          display: flex;
+          justify-content: center;
+        }
+
+        .about_content {
+          color: black;
+        }
+
+        .slideStart{
+          transform: translateY(100px);
+          visibility: hidden;
+        }
+
+        .slideUp{
+          animation: slideUp 2s ease forwards;
         }
       }
 
-      .fix{
-        position: fixed;
-        top: 0;
-        left: 0;
-      }
-
-      .skillBarColor{
-        background-color: #7fb174 !important;
-      }
-
-      .exampleBarColor{
-        background-color: #5580a0 !important;
-      }
-
-      .main_show{
-        width: 80%;
-        background: linear-gradient(90deg, #632A7E, #280E3B);
-      }
-
-      .skillBG{
-        background: linear-gradient(90deg, #689c97, #072A24) !important;
-      }
-
-      .exampleBG{
-        background: linear-gradient(90deg, #32435F, #CC8A4D) !important;
-      }
-
-      .ml20p{
-        margin-left: 20%;
+      .skills {
+        min-height: 100vh;
+        width: 100%;
       }
     }
 
-    .about {
-      min-height: 100vh;
-    }
-
-    .skills{
-      min-height: 100vh;
-    }
-
-    .example{
-      min-height: 100vh;
-    }
   }
 
   //animation
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100px);
+      visibility: hidden;
+
+    }
+    to {
+      transform: translateY(0px);
+      visibility : visible;
+
+    }
+  }
 
 
   @keyframes hideAndShow {
@@ -356,7 +458,7 @@
     0% {
       bottom: 15px;
     }
-    50%{
+    50% {
       bottom: 25px;
     }
     100% {

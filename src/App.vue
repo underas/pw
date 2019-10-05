@@ -42,7 +42,9 @@
       </div>
       <div id="Content" class="Content">
         <div class="sideBar hidden-sm-and-down" :class="{ poFix : overBanner}">
-          <div class="sideBar_items" :class="{ 'mt-7' : index === 0 , active : index === 0 && inAbout  , activeSkill : index === 1 && inSkills}" v-for="(item , index) in items" :key="index">
+          <div class="sideBar_items"
+               :class="{ 'mt-7' : index === 0 , active : index === 0 && inAbout  , activeSkill : index === 1 && inSkills , activeDemo : index === 2&& inExample}"
+               v-for="(item , index) in items" :key="index">
             <span class="mr-2"><v-icon class="iconColor">{{item.icon}}</v-icon></span><span style="white-space: pre">{{item.title}}</span>
           </div>
         </div>
@@ -55,7 +57,7 @@
                   <v-col cols="1"></v-col>
                   <v-col cols="10">
                     <v-card max-width="100%" class="slideStart" :class="{ slideUp : this.cardShow }">
-                      <v-card-title class="about_title">123</v-card-title>
+                      <v-card-title class="about_title">{{ about[0].title }}</v-card-title>
                       <v-card-text class="about_content">
                         3212312132123121321231213212312132123121321231213212312132123121321231213212312132123121321231213212312132123121
                       </v-card-text>
@@ -73,7 +75,8 @@
                   <v-col cols="10">
                     <v-row>
                       <v-col cols="6">
-                        <v-card max-width="100%" height="100%" class="slideStart" elevation="12" :class="{ slideUp : this.cardShow }">
+                        <v-card max-width="100%" height="100%" class="slideStart" elevation="12"
+                                :class="{ slideUp : this.cardShow }">
                           <v-card-title class="about_title">{{ about[1].title }}</v-card-title>
                           <v-card-text class="about_content">
                             {{ about[1].content }}
@@ -81,7 +84,8 @@
                         </v-card>
                       </v-col>
                       <v-col cols="6">
-                        <v-card max-width="100%" height="100%" class="slideStart" elevation="12" :class="{ slideUp : this.cardShow }">
+                        <v-card max-width="100%" height="100%" class="slideStart" elevation="12"
+                                :class="{ slideUp : this.cardShow }">
                           <v-card-title class="about_title">{{ about[2].title }}</v-card-title>
                           <v-card-text class="about_content">
                             {{ about[2].content }}
@@ -97,7 +101,46 @@
           </div>
         </div>
         <div id="skills" class="skills">
+          <div style="width: 100%;">
+            <v-row>
+              <v-col md="3"></v-col>
+              <v-col cols="12" md="9">
+                <v-row>
+                  <v-col cols="1"></v-col>
+                  <v-col cols="10">
+                    <div class="skill__list slideStart" :class="{ slideRight : this.skillShow }">
+                      <div class="skill__list__btn" :class="{ active : inFrontend }" @click="inFrontend = true">
+                        frontend
+                      </div>
+                      <div class="skill__list__btn" :class="{ active : !inFrontend }" @click="inFrontend = false">
+                        Backend
+                      </div>
+                    </div>
+                    <div class="skills__box slideStart" :class="{ slideRight : this.skillShow }">
 
+                    </div>
+                  </v-col>
+                  <v-col cols="1"></v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </div>
+        </div>
+        <div id="demo" class="demo">
+          <div style="width: 100%;">
+            <v-row>
+              <v-col md="3"></v-col>
+              <v-col cols="12" md="9">
+                <v-row>
+                  <v-col cols="1"></v-col>
+                  <v-col cols="10">
+
+                  </v-col>
+                  <v-col cols="1"></v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </div>
         </div>
       </div>
 
@@ -115,15 +158,19 @@
             bannerBG: require('@/assets/image/bg.jpg'),
             drawer: true,
             overBanner: false,
-            cardShow : false,
+            cardShow: false,
+            skillShow : false,
             bannerH: null,
             aboutH: null,
-            skillsH : null,
+            skillsH: null,
+            demoH: null,
             changePoint: null,
             changePoint1: null,
-            inAbout : false,
-            inSkills : false,
-            inExample : false,
+            changePoint2: null,
+            inAbout: false,
+            inSkills: false,
+            inExample: false,
+            inFrontend : true,
             items: [
                 {title: 'AboutMe', icon: 'mdi-account'},
                 {title: 'MySkills', icon: 'mdi-book-open'},
@@ -142,31 +189,39 @@
                 {
                     title: '現職狀況',
                     content: '目前任職於幸福空間，擔任前端工程師，負責項目為撰寫業務或企劃需求的網頁與現行網站改版作業，主要是將傳統前後端合一的php網站拆為vue(nuxt)與php(CI)結合，環境使用docker + nginx + MariaDB' +
-                        '活動網頁依照需求不同使用（ Vue Cli3 或 Nuxt 搭配 vuetify 串接使用Axios 、 gulp建置html搭配bootstrap或script使用vue進行動態網頁撰寫,串接使用jquery Ajax）並持續學習其他網頁新知識。'
+                        '活動網頁依照需求不同使用（ Vue Cli3 或 Nuxt 搭配 vuetify 串接使用Axios 、 gulp建置html搭配bootstrap或script使用vue進行動態網頁撰寫，串接使用jquery Ajax）並持續學習其他網頁新知識。'
                 },
                 {
                     title: '未來展望',
                     content: '希望持續整合自己對於網頁技術的能力，不管是frontend、backend、devoop部份都想持續進步，讓自己對整體的軟體架構有更多了解，個人能力之外，希望能找到大家一起進步的團隊，而不是過度官僚或充斥' +
                         '表面功夫的地方。除了前端工程師這份工作之外，本身也想嘗試不同方面的經驗！所以對於產業部分沒有特別限制。'
                 },
+            ],
+            NowShowSkill: '',
+            Skills : [
+                '',
+                ''
             ]
         }),
+        computed: {
+
+        },
         mounted() {
             window.addEventListener('scroll', this.handle);
             const bannerHeight = document.querySelectorAll('#banner');
             const aboutHeight = document.querySelectorAll('#about');
             const skillsHeight = document.querySelectorAll('#skills');
+            const demoHeight = document.querySelectorAll('#demo');
 
 
             this.bannerH = bannerHeight[0].clientHeight;
             this.aboutH = aboutHeight[0].clientHeight;
             this.skillsH = skillsHeight[0].clientHeight;
-
-
+            this.demoH = demoHeight[0].clientHeight;
 
             this.changePoint = this.bannerH + this.aboutH - 60;
-            this.changePoint1 = this.bannerH + this.aboutH + this.skillsH ;
-
+            this.changePoint1 = this.bannerH + this.aboutH + this.skillsH;
+            this.changePoint2 = this.bannerH + this.aboutH + this.skillsH + this.demoH;
         },
         methods: {
             handle() {
@@ -182,20 +237,30 @@
                     this.cardShow = false;
                 }
 
-                if (window.pageYOffset >= this.bannerH / 2 && window.pageYOffset < this.changePoint +60 ) {
+                if (window.pageYOffset >= (this.changePoint + 60) - (this.aboutH  / 2)) {
+                    this.skillShow = true;
+                } else {
+                    this.skillShow = false;
+                }
+
+
+                if (window.pageYOffset >= this.bannerH / 2 && window.pageYOffset < this.changePoint + 60) {
                     this.inAbout = true;
                 } else {
                     this.inAbout = false;
                 }
 
-                if (window.pageYOffset >= (this.changePoint + 60) - (this.aboutH / 2) && window.pageYOffset < this.changePoint1  ) {
+                if (window.pageYOffset >= (this.changePoint + 60) - (this.aboutH / 2) && window.pageYOffset < this.changePoint1) {
                     this.inSkills = true;
                 } else {
                     this.inSkills = false;
                 }
 
-
-
+                if (window.pageYOffset >= this.changePoint1 - this.skillsH / 2 && window.pageYOffset < this.changePoint2) {
+                    this.inExample = true;
+                } else {
+                    this.inExample = false;
+                }
 
 
             },
@@ -355,11 +420,15 @@
         z-index: 1;
         background: linear-gradient(70deg, #282A2B, #6996A9);
 
-        .active{
+        .active {
           background-color: rgba(0, 0, 0, 0.2);
         }
 
-        .activeSkill{
+        .activeSkill {
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .activeDemo{
           background-color: rgba(0, 0, 0, 0.2);
         }
 
@@ -393,34 +462,89 @@
         width: 100%;
         display: flex;
         align-items: center;
-        background: url('assets/image/about_bg.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: bottom;
-        background-attachment: fixed;
 
         .about_title {
           display: flex;
           justify-content: center;
+          font-family: 'Noto Sans TC', sans-serif;
         }
 
         .about_content {
           color: black;
+          font-size: 16px;
+          line-height: 2rem;
+          font-family: 'Noto Sans TC', sans-serif;
         }
 
-        .slideStart{
-          transform: translateY(100px);
-          visibility: hidden;
+        .slideStart {
+          transform: translateX(800px);
         }
 
-        .slideUp{
-          animation: slideUp 2s ease forwards;
+        .slideUp {
+          animation: slideUp 1s ease forwards;
         }
       }
 
       .skills {
         min-height: 100vh;
         width: 100%;
+        display: inline-flex;
+        align-items: center;
+
+        .slideRight {
+          animation: slideRight 1s ease forwards;
+        }
+
+        .slideStart {
+          transform: translateX(-1000px);
+        }
+
+        .skills__box{
+          width: 100%;
+          min-height: 500px;
+          background-color: #f7f3f2;
+          box-shadow: 10px 10px 20px black;
+          font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        .skill__list{
+          width: 100%;
+          min-height: 60px;
+          background-color: #E7DFDD;
+          display: inline-flex;
+          .skill__list__btn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50%;
+            color: #0E0B16;
+            font-weight: bold;
+            font-size: 18px;
+            font-family: 'Noto Sans TC', sans-serif;
+            transition: .3s;
+          }
+
+          .skill__list__btn:hover{
+            cursor: pointer;
+            background-color: #0E0B16;
+            color: #E7DFDD;
+
+          }
+
+          .active{
+            background-color: #0E0B16;
+            color: #E7DFDD;
+          }
+        }
+
+      }
+
+      .demo{
+        min-height: 100vh;
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+
       }
     }
 
@@ -430,13 +554,22 @@
 
   @keyframes slideUp {
     from {
-      transform: translateY(100px);
-      visibility: hidden;
+      transform: translateX(800px);
 
     }
     to {
       transform: translateY(0px);
-      visibility : visible;
+
+    }
+  }
+
+  @keyframes slideRight {
+    from {
+      transform: translateX(-1000px);
+
+    }
+    to {
+      transform: translateY(0px);
 
     }
   }
